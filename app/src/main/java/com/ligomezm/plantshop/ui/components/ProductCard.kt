@@ -41,18 +41,23 @@ enum class Plants(val iso: String) {
     }
 }
 
+typealias SelectionAction = () -> Unit
 
 @Composable
 fun ProductCard(name: String,
                 details: String,
                 price: Double,
                 currency: String,
-                plants: Plants) {
+                plants: Plants,
+                selected: SelectionAction
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable { }
+            .clickable {
+                selected()
+            }
             .size(400.dp),
         elevation = 10.dp,
         shape = MaterialTheme.shapes.small
@@ -108,6 +113,6 @@ fun ProductCardPreview() {
             80.0,
             "USD",
             Plants.CYPRESS
-        )
+        ) {}
     }
 }

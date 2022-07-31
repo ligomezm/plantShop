@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ligomezm.plantshop.ui.components.BodyText
 import com.ligomezm.plantshop.ui.components.ProductCard
 import com.ligomezm.plantshop.ui.components.Plants
@@ -18,7 +20,7 @@ import com.ligomezm.plantshop.ui.components.TitleTex
 import com.ligomezm.plantshop.ui.theme.PlantShopTheme
 
 @Composable
-fun FeedScreen() {
+fun FeedScreen(navController: NavController) {
 
     val list = listOf<Plants>(
         Plants.CYPRESS, Plants.PALM, Plants.JADE, Plants.CELOSIA
@@ -44,8 +46,12 @@ fun FeedScreen() {
                         details = "Prueba",
                         price = 80.0,
                         currency = "Prueba",
-                        plants = plants)
-
+                        plants = plants
+                    ) {
+                        navController.navigate("detail/${plants.iso}") {
+                            launchSingleTop = true
+                        }
+                    }
                 }
             }
         }
@@ -55,5 +61,6 @@ fun FeedScreen() {
 @Preview(showBackground = true)
 @Composable
 fun FeedScreenPreview() {
-    FeedScreen()
+    val navController = rememberNavController()
+    FeedScreen(navController)
 }
