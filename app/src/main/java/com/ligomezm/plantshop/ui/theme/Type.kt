@@ -21,6 +21,12 @@ val Typography = Typography(
         fontSize = 16.sp,
         color = FontText
     ),
+    h3 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 32.sp,
+        color = Color.Black
+    ),
     h4 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
@@ -28,11 +34,17 @@ val Typography = Typography(
         color = Color.White
 
     ),
-    h3 = TextStyle(
+    h5 = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold,
-        fontSize = 32.sp,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
         color = Color.Black
+    ),
+    caption = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        color = Placeholder
     ),
     button = TextStyle(
         fontFamily = FontFamily.Default,
