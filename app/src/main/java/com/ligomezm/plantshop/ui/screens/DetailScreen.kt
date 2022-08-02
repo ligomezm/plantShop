@@ -67,7 +67,7 @@ fun DetailScreen(navController: NavController, plants: Plants) {
                            textAlign = TextAlign.End
                        )
                         CustomButton(label = "Continuar") {
-                            navController.navigate("ckeckout") {
+                            navController.navigate("ckeckout/${plants.iso}") {
                                 launchSingleTop = true
                             }
                         }

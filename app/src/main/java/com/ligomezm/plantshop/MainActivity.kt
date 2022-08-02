@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ligomezm.plantshop.ui.components.Plants
+import com.ligomezm.plantshop.ui.screens.CheckoutScreen
 import com.ligomezm.plantshop.ui.screens.DetailScreen
 import com.ligomezm.plantshop.ui.screens.FeedScreen
 import com.ligomezm.plantshop.ui.theme.PlantShopTheme
@@ -37,6 +38,11 @@ fun NavigationHost() {
                     val plantsString = backStackEntry.arguments?.getString("plants") ?: "CEL"
                     val plants = Plants.valueOf(plantsString)
                     DetailScreen(navController = navController, plants = plants)
+                }
+                composable(route = "checkout/{plants}") { backStackEntry ->
+                    val plantsString = backStackEntry.arguments?.getString("plants") ?: "CEL"
+                    val plants = Plants.valueOf(plantsString)
+                    CheckoutScreen(navController = navController, plants = plants)
                 }
             }
         }
