@@ -25,7 +25,7 @@ fun CustomTextField(
     enabled: Boolean = true,
     trailingIcon: @Composable (() -> Unit)? = null,
     onGloballyPositioned: ((LayoutCoordinates) -> Unit)? = null,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     OutlinedTextField(
@@ -37,7 +37,8 @@ fun CustomTextField(
                 text = placeholder,
                 style = MaterialTheme.typography.caption)
         },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .onGloballyPositioned { coordinates ->
                 if (onGloballyPositioned != null) {
                     onGloballyPositioned(coordinates)
@@ -45,7 +46,7 @@ fun CustomTextField(
             },
         enabled = enabled,
         keyboardActions = KeyboardActions(
-            onDone = {focusManager.clearFocus()}
+            onDone = { focusManager.clearFocus() }
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done,
@@ -53,7 +54,7 @@ fun CustomTextField(
         ),
         trailingIcon = trailingIcon
     )
-    
+
 }
 
 @Preview(

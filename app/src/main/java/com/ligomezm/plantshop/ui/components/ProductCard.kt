@@ -11,59 +11,56 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.ligomezm.plantshop.R
+import com.ligomezm.plantshop.models.Product
 import com.ligomezm.plantshop.ui.theme.Blue
-import com.ligomezm.plantshop.ui.theme.PlantShopTheme
 
-enum class Plants(val iso: String) {
-    CELOSIA("CEL"),
-    CYPRESS("CYP"),
-    PALM("PAL"),
-    JADE("JAD");
+enum class Plants {
+    CEL, CYP, PAL, JAD;
 
-    fun getPlantImage() : Int {
-        return when(this) {
-            CELOSIA -> R.drawable.plant1
-            CYPRESS -> R.drawable.plant2
-            PALM -> R.drawable.plant3
-            JADE -> R.drawable.plant4
+    fun getPlantImage(): Int {
+        return when (this) {
+            CEL -> R.drawable.plant1
+            CYP -> R.drawable.plant2
+            PAL -> R.drawable.plant3
+            JAD -> R.drawable.plant4
         }
     }
 
     fun getSunImage(): Int {
-        return when(this) {
-            CELOSIA, JADE -> R.drawable.sun
-            PALM -> R.drawable.part_sun
-            CYPRESS -> R.drawable.shade
+        return when (this) {
+            CEL, JAD -> R.drawable.sun
+            PAL -> R.drawable.part_sun
+            CYP -> R.drawable.shade
         }
     }
 }
 
-typealias SelectionAction = () -> Unit
 
 @Composable
-fun ProductCard(name: String,
-                details: String,
-                price: Double,
-                currency: String,
-                plants: Plants,
-                selected: SelectionAction
+fun ProductCard(
+    navController: NavController,
+    product: Product,
 ) {
+    val plant = Plants.valueOf(product.plantIso)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clickable {
-                selected()
+                navController.navigate("detail/${product.id}") {
+                    launchSingleTop = true
+                }
             }
             .size(400.dp),
         elevation = 10.dp,
         shape = MaterialTheme.shapes.small
     ) {
         Image(
-            painter = painterResource(plants.getPlantImage()),
+            painter = painterResource(plant.getPlantImage()),
             contentDescription = null)
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -73,10 +70,10 @@ fun ProductCard(name: String,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(16.dp)) {
                 Text(
-                    name,
+                    product.name,
                     style = MaterialTheme.typography.h4)
                 Text(
-                    details,
+                    product.summary,
                     style = MaterialTheme.typography.body1)
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -87,32 +84,16 @@ fun ProductCard(name: String,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Image(
-                            painter = painterResource(plants.getSunImage()),
+                            painter = painterResource(plant.getSunImage()),
                             contentDescription = null,
                             modifier = Modifier.size(48.dp)
                         )
                         Text(
-                            text = "$ $price $currency",
+                            text = "$ ${product.price} ${product.currency}",
                             style = MaterialTheme.typography.h4)
                     }
                 }
             }
         }
-    }
-}
-
-@Preview(
-    showBackground = true
-)
-@Composable
-fun ProductCardPreview() {
-    PlantShopTheme {
-        ProductCard(
-            "Cypress tree",
-            "Beatiful ornamental plant, perfect for indoors.",
-            80.0,
-            "USD",
-            Plants.CYPRESS
-        ) {}
     }
 }

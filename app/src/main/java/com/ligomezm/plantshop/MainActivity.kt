@@ -9,18 +9,22 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ligomezm.plantshop.ui.components.Plants
 import com.ligomezm.plantshop.ui.screens.CheckoutScreen
 import com.ligomezm.plantshop.ui.screens.DetailScreen
 import com.ligomezm.plantshop.ui.screens.FeedScreen
 import com.ligomezm.plantshop.ui.theme.PlantShopTheme
+import com.ligomezm.plantshop.utilities.MockDataProvider
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NavigationHost()
+            PlantShopTheme {
+                Surface(color = MaterialTheme.colors.background) {
+                    NavigationHost()
+                }
+            }
         }
     }
 }
@@ -28,23 +32,22 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavigationHost() {
     val navController = rememberNavController()
-    PlantShopTheme() {
-        Surface(color = MaterialTheme.colors.background) {
-            NavHost(navController = navController, startDestination = "feed") {
-                composable(route = "feed") {
-                    FeedScreen(navController = navController)
-                }
-                composable(route = "detail/{plants}") { backStackEntry ->
-                    val plantsString = backStackEntry.arguments?.getString("plants") ?: "CEL"
-                    val plants = Plants.valueOf(plantsString)
-                    DetailScreen(navController = navController, plants = plants)
-                }
-                composable(route = "checkout/{plants}") { backStackEntry ->
-                    val plantsString = backStackEntry.arguments?.getString("plants") ?: "CEL"
-                    val plants = Plants.valueOf(plantsString)
-                    CheckoutScreen(navController = navController, plants = plants)
-                }
-            }
+    NavHost(navController = navController, startDestination = "feed") {
+        composable(route = "feed") {
+            FeedScreen(navController = navController)
+        }
+        composable(route = "detail/{productId}") { backStackEntry ->
+            val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
+            val productId = productIdString.toInt()
+            val product = MockDataProvider.getProductBy(productId)
+            DetailScreen(navController = navController, product!!)
+
+        }
+        composable(route = "checkout/{productId}") { backStackEntry ->
+            val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
+            val productId = productIdString.toInt()
+            val product = MockDataProvider.getProductBy(productId)
+            CheckoutScreen(navController = navController, product!!)
         }
     }
 }

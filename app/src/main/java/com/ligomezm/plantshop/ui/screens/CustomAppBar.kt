@@ -12,24 +12,24 @@ typealias NavigationAction = () -> Unit
 fun CustomAppBar(
     title: String? = null,
     navigationIcon: ImageVector? = null,
-    navigationAction: NavigationAction? = null
-    ) {
-    val titleText = title ?: ""
+    navigationAction: NavigationAction? = null,
+) {
+    val titleText = title ?: "Plant Shop"
     if (navigationIcon != null && navigationAction != null) {
         TopAppBar(
-            title = { Text(text = titleText)},
+            title = { Text(text = titleText) },
             navigationIcon = {
-                             IconButton(onClick = {
-                                 navigationAction()
-                             }) {
-                                 Icon(navigationIcon, "")
+                IconButton(onClick = {
+                    navigationAction()
+                }) {
+                    Icon(navigationIcon, "")
 
-                             }
+                }
             },
             backgroundColor = MaterialTheme.colors.secondary)
     } else {
         TopAppBar(
-            title = { Text(text = titleText)},
+            title = { Text(text = titleText) },
             backgroundColor = MaterialTheme.colors.secondary)
     }
 }
@@ -40,7 +40,7 @@ fun CustomAppBar(
 @Composable
 fun CustomAppBarPreview() {
     PlantShopTheme {
-       CustomAppBar("Plant Shop")
+        CustomAppBar("Plant Shop")
     }
 
 }

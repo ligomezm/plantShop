@@ -1,7 +1,6 @@
 package com.ligomezm.plantshop.ui.theme
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.Placeholder
 
 val LightGreen = Color(0xFF8BC34A)
 val Placeholder = Color(0xFFB6C1A7)

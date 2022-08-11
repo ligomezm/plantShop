@@ -17,7 +17,7 @@ fun TitleTex(title: String) {
 
 @Composable
 fun TitleTextPreview() {
-    PlantShopTheme() {
+    PlantShopTheme {
         TitleTex("Title")
     }
 

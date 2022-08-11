@@ -14,7 +14,7 @@ fun BodyText(bodyText: String) {
         textAlign = TextAlign.Justify)
 }
 
-@Preview (
+@Preview(
     showBackground = true
 )
 @Composable
